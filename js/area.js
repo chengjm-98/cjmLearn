@@ -1,13 +1,13 @@
 //作用域
-//   function foo() {
-//     console.log(a); //2
-//   }
-// function bar() {
-//   var a = 3;
-//   foo();
-// }
-// var a = 2;
-// bar();
+function foo() {
+  console.log(a); //2
+}
+function bar() {
+  var a = 3;
+  foo();
+}
+var a = 2;
+bar();
 //如果是以上这样的，就是输出2
 /* 
    因为函数foo中的console.log(a)，在执行的时候，会先去函数foo的作用域链中查找a，
@@ -15,15 +15,15 @@
    全局变量var a=2，变量声明提升了，所以全局作用域中有var a=2，所以会输出2
  */
 
-// function foo() {
-//   console.log(a); //undefined
-// }
-// function bar() {
-//   var a = 3;
-//   foo();
-// }
-// bar();
-// var a = 2;
+function foo() {
+  console.log(a); //undefined
+}
+function bar() {
+  var a = 3;
+  foo();
+}
+bar();
+var a = 2;
 //------------------------------------------------------------------------------
 
 //如果是以下这样的，就是输出3

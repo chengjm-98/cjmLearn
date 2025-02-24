@@ -1,61 +1,60 @@
-// //闭包实现模块
-// function  coolModule(){
-//   var something = 'cool'
-//   var another = [1,2,3]
-//   function doSomeThing(){
-//      console.log('someThing');
-//   }
-//   function doAnother(){
-//     console.log( another.join( " ! " ) );
-//   }
-//   return {
-//     doSomething: doSomething,
-//     doAnother: doAnother
-//   }
-// }
-// var foo = CoolModule();
-// foo.doSomething(); // cool
-// foo.doAnother(); // 1 ! 2 ! 3
+//闭包实现模块
+function coolModule() {
+  var something = "cool";
+  var another = [1, 2, 3];
+  function doSomeThing() {
+    console.log("someThing");
+  }
+  function doAnother() {
+    console.log(another.join(" ! "));
+  }
+  return {
+    doSomething: doSomething,
+    doAnother: doAnother,
+  };
+}
+var foo = CoolModule();
+foo.doSomething(); // cool
+foo.doAnother(); // 1 ! 2 ! 3
 
-// //使用立即执行函数实现单例模式模块
-// var foo=(
-// function  coolMOdule(){
-//   var something = 'cool'
-//   var another = [1,2,3]
-//   function doSomeThing(){
-//      console.log('someThing');
-//   }
-//   function doAnother(){
-//     console.log( another.join( " ! " ) );
-//   }
-//   return {
-//     doSomething: doSomething,
-//     doAnother: doAnother
-//   }
-// })()
-// foo.doSomething(); // cool
-// foo.doAnother(); // 1 ! 2 ! 3
-// //内部对模块实例进行修改
-// var foo=function CoolModule(id){
-//   function change(){
-//    publicAPI.identify=identify2;
-//   }
-//   function identify(){
-//     console.log(id);
-//   }
-//   function identify2(){
-//     console.log(id.toUpperCase());
-//   }
-//   var publicAPI = {
-//     change:change,
-//     identify: identify,
-//     identify2: identify2,
-//   };
-//     return publicAPI;
-// }
-// foo.identify(); // foo module
-// foo.change();
-// foo.identify(); // FOO MODULE
+//使用立即执行函数实现单例模式模块
+var foo = (function coolMOdule() {
+  var something = "cool";
+  var another = [1, 2, 3];
+  function doSomeThing() {
+    console.log("someThing");
+  }
+  function doAnother() {
+    console.log(another.join(" ! "));
+  }
+  return {
+    doSomething: doSomething,
+    doAnother: doAnother,
+  };
+})();
+foo.doSomething(); // cool
+foo.doAnother(); // 1 ! 2 ! 3
+//内部对模块实例进行修改
+var foo = function CoolModule(id) {
+  function change() {
+    publicAPI.identify = identify2;
+  }
+  function identify() {
+    console.log(id);
+  }
+  function identify2() {
+    console.log(id.toUpperCase());
+  }
+  var publicAPI = {
+    change: change,
+    identify: identify,
+    identify2: identify2,
+  };
+  return publicAPI;
+};
+foo.identify(); // foo module
+foo.change();
+foo.identify(); // FOO MODULE
 
 //关于闭包实现的现代的模块机制
 
