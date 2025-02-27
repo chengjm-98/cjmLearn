@@ -164,3 +164,37 @@ var obj = {
 }[(1, 2, 3)].forEach(foo, obj); //1 awesome  2 awesome  3 awesome
 //---------------------------------------->
 //绑定的优先级  关于显示绑定和new绑定
+//------------------------------------------->
+//软绑定
+// 软绑定
+if (!Function.prototype.softBind) {
+  Function.prototype.softBind = function (obj) {
+    var fn = this;
+    var curried = [].slice.call(arguments, 1); //通过call给slice方法传递上下文arguments，1是传递给slice的参数
+    var bound = function () {
+      if (!this || this === (window || global)) {
+        debugger;
+        console.log("绑定在全局");
+      }
+      return fn.apply(
+        !this || this === (window || global) ? obj : this,
+        curried.concat.apply(curried, arguments)
+      );
+    };
+    bound.prototype = Object.create(fn.prototype);
+    return bound;
+  };
+}
+
+function foo(string) {
+  console.log("name:", this.name, "string:", string);
+}
+var obj = {
+  name: "obj",
+};
+var obj2 = {
+  name: "obj2",
+};
+var obj3 = {
+  name: "obj3",
+};
