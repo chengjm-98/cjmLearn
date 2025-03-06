@@ -81,7 +81,22 @@
 // console.log(Object.getOwnPropertyDescriptor(Person.prototype, "sayHello"));
 //-------------------------------------------------------------------------->
 //私有属性
-//通过实例在静态方法中访问私有属性
+/*
+只能在类内部的实例方法中访问。私有属性无法继承。但是可以通过实例方法访问私有属性。
+*/
+//注意
+// class Person {
+//   constructor(name) {
+//     this.name = name;
+//   }
+//   #Id='142430199812231220'
+//  static getId() {
+//     console.log(`Hello, my name is ${this.#Id}.`);
+//   }
+//  }
+//这种写法是错误的，因为不能在静态函数中访问私有属性
+
+//但是可以通过实例在静态方法中访问私有属性
 // class Person {
 //   #Id = "142430199812231220";
 //   constructor(name) {
@@ -94,24 +109,3 @@
 // const person1 = new Person("cjm");
 // console.log(Person.getId(person1));
 //--------------------------------------------------------------------------->
-class C {
-  #brand;
-
-  static isC(obj) {
-    if (#brand in obj) {
-      // 私有属性 #brand 存在
-      return true;
-    } else {
-      // 私有属性 #foo 不存在
-      return false;
-    }
-  }
-}
-let c1 = new C();
-console.log(C.isC(c1));
-
-class likeC {
-  #brand;
-}
-let c2 = new likeC();
-console.log(C.isC(c2));

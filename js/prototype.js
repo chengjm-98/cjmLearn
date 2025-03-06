@@ -122,3 +122,17 @@ b2.speak();
 var F1 = Object.create(Foo);
 F1.init("F1");
 F1.speak(); //F1没有speak方法
+//----------------------------------------------------------------------->
+//手写instance of
+function myInstanceof(obj, constructor) {
+  // 如果 obj 是 null 或者不是对象，直接返回 false
+  if (typeof obj !== "object" || obj === null) return false;
+  let proto = Object.getPrototypeOf(obj); //获取原型
+  while (proto) {
+    if (proto === constructor.prototype)
+      // 找到匹配的原型
+      return true;
+    proto = Object.getPrototypeOf(proto); // 继续沿着原型链查找
+  }
+  return false; // 达到尽头，尽头是null，未找到匹配的原型，返回 false
+}
