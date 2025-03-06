@@ -52,3 +52,24 @@ function add(a, b, c, d) {
 
 const curriedAdd = curry(add);
 console.log(curriedAdd(1)(2)(3)); // 6
+
+//---------------------------------------------------------->
+//函数柯里化 实现add(1，2)(3)(4)
+function add() {
+  let _args = Array.prototype.slice.call(arguments); //转换成数组
+  let adder = function () {
+    if (Array.prototype.slice.call(arguments).length == 0) {
+      const sum = _args.reduce(
+        (accumulator, currentValue) => accumulator + currentValue,
+        0
+      );
+      return sum;
+    } else {
+      _args.push(...arguments);
+    }
+    return adder;
+  };
+  return adder;
+}
+
+console.log(add(1, 2)(3)(4)());
