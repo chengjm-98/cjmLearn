@@ -23,11 +23,23 @@ c.love.push("code");
 console.log(c1.love); //[ 'music','movie', 'code' ]
 ```
 
+### 原理
+
+Child.prototype = new Parent(); 这行代码实现的原型链：
+Child.prototype.**proto** = Parent 实例.**proto**;
+Child.prototype.**proto** = Parent.prototype;
+所以原型链继承完整，可以访问到 parent 原型上的方法。但是存在很多弊端
+
 ### 弊端
 
-1. 引用类型的属性被所有实例共享
-2. 在创建 Child 的实例时，不能向 Parent 传参
-3. constructor 指向 Parent（指向错误）
+1. 所有的子类的实例引用数据类型共用了。
+   原因：Child.prototype = new Parent(); 所有 Child 实例的 **proto** 都指向同一个 Child.prototype，因此它们共享 colors 数组。
+2. 没办法传值
+   在 Child.prototype = new Parent(); 时，没有办法向构造函数传值，因为此时 child 还没有被实例化，所以构造函数中的代码只会在 new Parent()的时候运行一次。
+3. 子类实例无法直接调用 Parent 构造函数
+   Child.prototype = new Parent(); 只是让 Child.prototype 继承了 Parent 的属性和方法，但 Child 本身并没有执行 Parent 构造函数。
+4. 继承的方式导致 Child.prototype.constructor 指向错误
+   Child.prototype.constructor 默认应该指向 Child，但因为 Child.prototype = new Parent();，它变成了指向 Parent。
 
 ## 2.借用构造函数继承()
 
