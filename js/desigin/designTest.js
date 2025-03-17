@@ -1,81 +1,54 @@
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
-        return extendStatics(d, b);
-    };
-    return function (d, b) {
-        if (typeof b !== "function" && b !== null)
-            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-//钟表产品类
-var WatchClock = /** @class */ (function () {
-    function WatchClock() {
+// class Singleton {
+//     static #instance: Singleton;
+//     private constructor() { }
+//     public static get instance(): Singleton {
+//         if (!Singleton.#instance) {
+//             Singleton.#instance = new Singleton();
+//         }
+var __classPrivateFieldGet = (this && this.__classPrivateFieldGet) || function (receiver, state, kind, f) {
+    if (kind === "a" && !f) throw new TypeError("Private accessor was defined without a getter");
+    if (typeof state === "function" ? receiver !== state || !f : !state.has(receiver)) throw new TypeError("Cannot read private member from an object whose class did not declare it");
+    return kind === "m" ? f : kind === "a" ? f.call(receiver) : f ? f.value : state.get(receiver);
+};
+var __classPrivateFieldSet = (this && this.__classPrivateFieldSet) || function (receiver, state, value, kind, f) {
+    if (kind === "m") throw new TypeError("Private method is not writable");
+    if (kind === "a" && !f) throw new TypeError("Private accessor was defined without a setter");
+    if (typeof state === "function" ? receiver !== state || !f : !state.has(receiver)) throw new TypeError("Cannot write private member to an object whose class did not declare it");
+    return (kind === "a" ? f.call(receiver, value) : f ? f.value = value : state.set(receiver, value)), value;
+};
+var _a, _MySingleton_instance;
+//         return Singleton.#instance;
+//     }
+//     public someBusinessLogic() {
+//         // ...
+//     }
+// }
+// function clientCode() {
+//     const s1 = Singleton.instance;
+//     const s2 = Singleton.instance;
+//     if (s1 === s2) {
+//         console.log(
+//             'Singleton works, both variables contain the same instance.'
+//         );
+//     } else {
+//         console.log('Singleton failed, variables contain different instances.');
+//     }
+// }
+// clientCode();
+class MySingleton {
+    constructor() {
+        //构造函数私有化
     }
-    WatchClock.prototype.tick = function () {
-        console.log("手表 dida dida");
-    };
-    WatchClock.prototype.specialMethod = function () {
-        console.log("手表特殊方法");
-    };
-    return WatchClock;
-}());
-//数字钟
-var DigitalClock = /** @class */ (function () {
-    function DigitalClock() {
+    //一个公有的静态获取实例的方法
+    static getInstance() {
+        if (!__classPrivateFieldGet(_a, _a, "f", _MySingleton_instance)) {
+            __classPrivateFieldSet(_a, _a, new _a(), "f", _MySingleton_instance);
+        }
+        return __classPrivateFieldGet(_a, _a, "f", _MySingleton_instance);
     }
-    DigitalClock.prototype.tick = function () {
-        console.log("数字钟 beng beng");
-    };
-    DigitalClock.prototype.specialMethod = function () {
-        console.log("数字钟特殊方法");
-    };
-    return DigitalClock;
-}());
-//抽象工厂类
-var ClockFactory = /** @class */ (function () {
-    function ClockFactory() {
-    }
-    ClockFactory.prototype.someOperation = function () {
-        var product = this.createClock();
-        product.tick();
-    };
-    return ClockFactory;
-}());
-//手表工厂
-var WatchFactory = /** @class */ (function (_super) {
-    __extends(WatchFactory, _super);
-    function WatchFactory() {
-        return _super !== null && _super.apply(this, arguments) || this;
-    }
-    WatchFactory.prototype.createClock = function () {
-        return new WatchClock();
-    };
-    return WatchFactory;
-}(ClockFactory));
-//数字钟工厂
-var DigitalFactory = /** @class */ (function (_super) {
-    __extends(DigitalFactory, _super);
-    function DigitalFactory() {
-        return _super !== null && _super.apply(this, arguments) || this;
-    }
-    DigitalFactory.prototype.createClock = function () {
-        return new DigitalClock();
-    };
-    return DigitalFactory;
-}(ClockFactory));
-//客户端
-function clientCode(creator) {
-    console.log("Client:我不知道创建者的类，但是它仍然在工作");
-    creator.someOperation();
 }
-console.log("App: 启动");
-clientCode(new WatchFactory());
-console.log("");
-console.log("App: 启动");
-clientCode(new DigitalFactory());
+_a = MySingleton;
+_MySingleton_instance = { value: void 0 }; //静态私有属性，用来存储 实例
+let a = MySingleton.getInstance();
+let b = MySingleton.getInstance();
+console.log("是否是单例模式：", a === b);

@@ -1,57 +1,47 @@
-//产品的接口
-interface ClockInterface {
-  tick(): void;
-}
-//钟表产品类
-class WatchClock implements ClockInterface {
-  tick(): void {
-    console.log("手表 dida dida");
-  }
-  specialMethod(): void {
-    console.log("手表特殊方法");
-  }
-}
-//数字钟
-class DigitalClock implements ClockInterface {
-  tick(): void {
-    console.log("数字钟 beng beng");
-  }
-  specialMethod(): void {
-    console.log("数字钟特殊方法");
-  }
-}
-interface ClockConstructor {
-  new (): ClockInterface;
-}
+// class Singleton {
+//     static #instance: Singleton;
+//     private constructor() { }
+//     public static get instance(): Singleton {
+//         if (!Singleton.#instance) {
+//             Singleton.#instance = new Singleton();
+//         }
 
-//抽象工厂类
-abstract class ClockFactory {
-  abstract createClock(): ClockInterface;
-  public someOperation(): void {
-    const product = this.createClock();
-    product.tick();
+//         return Singleton.#instance;
+//     }
+//     public someBusinessLogic() {
+//         // ...
+//     }
+// }
+// function clientCode() {
+//     const s1 = Singleton.instance;
+//     const s2 = Singleton.instance;
+
+//     if (s1 === s2) {
+//         console.log(
+//             'Singleton works, both variables contain the same instance.'
+//         );
+//     } else {
+//         console.log('Singleton failed, variables contain different instances.');
+//     }
+// }
+
+// clientCode();
+
+class MySingleton {
+  static #instance: MySingleton; //静态私有属性，用来存储 实例
+  private constructor() {
+    //构造函数私有化
   }
-}
-//手表工厂
-class WatchFactory extends ClockFactory {
-  createClock(): ClockInterface {
-    return new WatchClock();
-  }
-}
-//数字钟工厂
-class DigitalFactory extends ClockFactory {
-  createClock(): ClockInterface {
-    return new DigitalClock();
+  //一个公有的静态获取实例的方法
+  public static getInstance(): MySingleton {
+    if (!MySingleton.#instance) {
+      MySingleton.#instance = new MySingleton();
+    }
+    return MySingleton.#instance;
   }
 }
 
-//客户端
-function clientCode(creator: ClockFactory) {
-  console.log("Client:我不知道创建者的类，但是它仍然在工作");
-  creator.someOperation();
-}
-console.log("App: 启动");
-clientCode(new WatchFactory());
-console.log("");
-console.log("App: 启动");
-clientCode(new DigitalFactory());
+let a = MySingleton.getInstance();
+let b = MySingleton.getInstance();
+
+console.log("是否是单例模式：", a === b);
