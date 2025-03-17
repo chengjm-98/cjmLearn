@@ -1,36 +1,27 @@
-var __classPrivateFieldGet = (this && this.__classPrivateFieldGet) || function (receiver, state, kind, f) {
-    if (kind === "a" && !f) throw new TypeError("Private accessor was defined without a getter");
-    if (typeof state === "function" ? receiver !== state || !f : !state.has(receiver)) throw new TypeError("Cannot read private member from an object whose class did not declare it");
-    return kind === "m" ? f : kind === "a" ? f.call(receiver) : f ? f.value : state.get(receiver);
-};
-var __classPrivateFieldSet = (this && this.__classPrivateFieldSet) || function (receiver, state, value, kind, f) {
-    if (kind === "m") throw new TypeError("Private method is not writable");
-    if (kind === "a" && !f) throw new TypeError("Private accessor was defined without a setter");
-    if (typeof state === "function" ? receiver !== state || !f : !state.has(receiver)) throw new TypeError("Cannot write private member to an object whose class did not declare it");
-    return (kind === "a" ? f.call(receiver, value) : f ? f.value = value : state.set(receiver, value)), value;
-};
-var _a, _configManager__instance;
-class configManager {
-    // private config: { [key: string]: any } = {};  //这种写法也可以
-    constructor() {
-        this.config = {}; //Record<string,any> 会生成一个对象，对象的key是string，value是any
-    }
-    static getInstance() {
-        if (!__classPrivateFieldGet(_a, _a, "f", _configManager__instance)) {
-            __classPrivateFieldSet(_a, _a, new _a(), "f", _configManager__instance);
-        }
-        return __classPrivateFieldGet(_a, _a, "f", _configManager__instance);
-    }
-    getConfig(key) {
-        return this.config[key];
-    }
-    setConfig(key, value) {
-        this.config[key] = value;
+//第三方库
+class ThirdPartyLogger {
+    logMessage(level, message) {
+        console.log(`[${level}] ${message}`);
     }
 }
-_a = configManager;
-_configManager__instance = { value: void 0 };
-const config = configManager.getInstance();
-config.setConfig("name", "张三");
-config.setConfig("age", 18);
-console.log(config.getConfig("name"));
+//适配器类
+class LoggerAdapter {
+    constructor() {
+        this.thirdPartyLogger = new ThirdPartyLogger();
+    }
+    logInfo(message) {
+        this.thirdPartyLogger.logMessage("INFO", message);
+    }
+    logError(message) {
+        this.thirdPartyLogger.logMessage("ERROR", message);
+    }
+}
+//客户端代码
+function clientCode(log) {
+    console.log("客户端代码开始执行");
+    log.logInfo("这是一条信息");
+    log.logError("这是一条错误信息");
+    console.log("客户端代码执行完毕");
+}
+let adapter = new LoggerAdapter();
+clientCode(adapter);
