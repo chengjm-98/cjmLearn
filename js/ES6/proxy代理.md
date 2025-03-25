@@ -32,6 +32,10 @@ for (let key in proxy) alert(key); // test，迭代也正常工作 (3)
 
 我们可以看到，没有任何捕捉器，proxy 是一个 target 的透明包装器（wrapper）。  
 ![alt text](proxy.png)
+
 所有对 proxy 的操作都直接转发给了 target。
 
 ### 设置捕捉器的 proxy 可以拦截操作
+
+**注意**
+代理应该在所有地方都**完全替代目标对象**。目标对象被代理后，任何人都不应该再引用目标对象。否则很容易搞砸。
