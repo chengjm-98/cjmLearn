@@ -1,10 +1,10 @@
-let obj = {
-  name: "cjm",
-};
-let p = new Proxy(obj, {
-  get(target, key) {
-    console.log("取数了!");
-    return target[key];
+function greet(name) {
+  return "Hello " + name;
+}
+greet = new Proxy(greet, {
+  apply: function (target, thisArg, argumentsList) {
+    console.log("函数被调用了");
+    return target.apply(thisArg, argumentsList);
   },
 });
-let name = p.name;
+greet("cjm");
