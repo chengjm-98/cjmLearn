@@ -165,7 +165,7 @@ console.log("age" in proxyObj); // 输出: 访问属性 age \n true
 console.log("address" in proxyObj); // 输出: false
 ```
 
-##### set 捕捉器的应用场景
+##### has 捕捉器的应用场景
 
 虚拟属性的实现：可以通过 has 捕捉器来模拟某些虚拟属性的存在，实际并没有这些属性，但你可以根据需求动态计算它们。
 
