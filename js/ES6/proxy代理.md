@@ -49,9 +49,9 @@ for (let key in proxy) alert(key); // test，迭代也正常工作 (3)
 
 **一些捕捉器：**
 
-![alt text](proxy.png)
+![alt text](proxy1.png)
 
-#### get 捕捉器
+### get 捕捉器
 
 \*_get(target, property, receiver)_
 
@@ -72,7 +72,7 @@ let p = new Proxy(obj, {
 let name = p.name;
 ```
 
-#### set 捕捉器
+### set 捕捉器
 
 \*_set(target, property, value, receiver)_
 
@@ -98,7 +98,7 @@ obj.age = 18;
 console.log(obj); // {name: 'cjm'}
 ```
 
-#### apply 捕捉器
+### apply 捕捉器
 
 **捕捉器能使代理以函数的方式被调用** \*_apply(target, thisArg, args)_
 
@@ -127,7 +127,7 @@ greet("cjm");
 
 -3.函数缓存 ：可以根据传入的参数返回缓存的结果，从而提高性能。
 
-#### has 捕捉器
+### has 捕捉器
 
 **has 捕捉器会拦截 in 调用** \*_has(target, property)_
 
@@ -177,7 +177,7 @@ console.log("address" in proxyObj); // 输出: false
 
 ### 一些具体的示例
 
-#### 扩展构造函数
+### 扩展构造函数
 
 ```js
 //base是boy的构造函数
@@ -234,4 +234,4 @@ console.log(Peter.name); // "Peter"
 console.log(Peter.age); // 13
 ```
 
-#### 操作 dom 节点
+### 操作 dom 节点
