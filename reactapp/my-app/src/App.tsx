@@ -1,32 +1,18 @@
-import { useEffect } from "react";
-import "./App.css";
+let guest = 0;
 
-function App() {
-  function log(target: any, key: string, descriptor: PropertyDescriptor) {
-    console.log("Decorator applied to:", target, key, descriptor);
-    const originalMethod = descriptor.value;
-    descriptor.value = function (...args: any[]) {
-      console.log(`Calling ${key} with args:`, args);
-      return originalMethod.apply(this, args);
-    };
-    return descriptor;
-  }
-  class User {
-    @log
-    greet(name: string) {
-      // ✅ 这里是方法
-      console.log(`Hello, ${name}!`);
-    }
-  }
-  useEffect(() => {
-    const user = new User();
-    user.greet("Alice");
-  }, []);
+function Cup() {
+  // Bad：正在更改预先存在的变量！
+  guest = guest + 1;
+  console.log("Cup", guest);
+  return <h2>Tea cup for guest #{guest}</h2>;
+}
+
+export default function App() {
   return (
     <>
-      <div>cjm的项目</div>
+      <Cup />
+      <Cup />
+      <Cup />
     </>
   );
 }
-
-export default App;
