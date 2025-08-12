@@ -48,5 +48,5 @@ return <div className="card">{props.children}</div>;
     2.如果props是引用类型，react会比较引用是否不同
 
 
-## 你不能改变 props。当你需要交互性时，你可以设置 state。
+## 你不能改变 props，当你需要交互性时，你可以设置 state。
 ```
