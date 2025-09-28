@@ -1,6 +1,7 @@
 # 🚀fiber (important!) react16 引入的
 
 链接：https://zhuanlan.zhihu.com/p/424967867
+https://react.iamkasong.com/#%E7%AB%A0%E8%8A%82%E5%88%97%E8%A1%A8
 
 - ## 先了解一下虚拟 DOM
 - ### 什么是虚拟 DOM
@@ -227,6 +228,7 @@
   - 遍历策略：深度优先（child 优先，再 sibling，最后 return 回溯）。
 
 - ❓ **那 fiber 分块中断什么的虽然有效让出主线程，那不会导致渲染不完全嘛？**
+
   - 不会，因为 fiber 是在 js 层面的，不是在浏览器层面的，react 的 fiber 架构设计了双缓冲机制+提交(commit)阶段不可中断。
     **只有调和的阶段可中断，commit 不可中断**
   - 双缓冲机制：
@@ -242,17 +244,22 @@
         - 2️⃣ 复用已经存在的 fiber 节点，避免重复创建
 
 - **fiber 的优先级**
-  - 1️⃣ 16之前用是expirationTime来表示优先级。
-  - 2️⃣ 16之后用的是lanes来表示优先级。
-- **fiber在更新的时候做的事情**
-  - 1️⃣ 创建update对象
-  - 2️⃣ 把update对象添加到updateQueue队列中
+  - 1️⃣ 16 之前用是 expirationTime 来表示优先级。
+  - 2️⃣ 16 之后用的是 lanes 来表示优先级。
+  - 💖 **介绍一下 lanes 的工作方式**
+    具体看 lanes.md
+- **fiber 在更新的时候做的事情**
+
+  - 1️⃣ 创建 update 对象
+  - 2️⃣ 把 update 对象添加到 updateQueue 队列中
   - 3️⃣ 调度
   - 4️⃣ 调和
-  - 5️⃣ 生成effect list
+  - 5️⃣ 生成 effect list
   - 6️⃣ 提交
   - 7️⃣ 渲染
   - 8️⃣ 并发与中断
 
--💖 **介绍一下lanes的工作方式**
-   具体看lanes.md
+- 🏳‍🌈 **effectList**
+ 
+- 🎞 **updateQueue**
+   具体详细见 updateQueue.md

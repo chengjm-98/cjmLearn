@@ -31,9 +31,9 @@
 ## 4. lane 的工作方式&调度流程
 
 - 1️⃣ 事件触发-生成更新
-  - 用户事件触发，根据事件类型选择 lane 并标记更新。
+  - 用户事件触发或者state或者props更新变化，根据事件类型选择 lane 并标记更新。
 - 2️⃣ 更新挂载到 Fiber
-  - 把更新挂载到对应的 fiber 的 updateQueue 上。
+  - 把更新挂载到对应的 fiber 的 updateQueue（fiber 的属性,lane 是这个属性中的一个 key） 上。
   - 更新标记 lane： fiber.lanes |= update.lane
   - 冒泡到父节点： fiber.lanes |= child.lanes
   - 冒泡到根节点： root.lanes |= fiber.lanes
