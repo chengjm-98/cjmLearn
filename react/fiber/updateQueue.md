@@ -1,6 +1,6 @@
    ### 1. 什么是 updateQueue?
     是每个 fiber 节点上的一个属性，用来记录该节点上的所有的挂起更新（state，props，forceUpdate）和相关的回调。 - 经典格式：
-
+   - 环形链表
     ```jsx
     interface Update<State> {
       lane: Lane; // 优先级

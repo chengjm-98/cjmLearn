@@ -249,17 +249,27 @@ https://react.iamkasong.com/#%E7%AB%A0%E8%8A%82%E5%88%97%E8%A1%A8
   - 💖 **介绍一下 lanes 的工作方式**
     具体看 lanes.md
 - **fiber 在更新的时候做的事情**
-
-  - 1️⃣ 创建 update 对象
-  - 2️⃣ 把 update 对象添加到 updateQueue 队列中
-  - 3️⃣ 调度
-  - 4️⃣ 调和
-  - 5️⃣ 生成 effect list
-  - 6️⃣ 提交
-  - 7️⃣ 渲染
-  - 8️⃣ 并发与中断
-
+ - 具体查看【一个详细具体的流程.md】
 - 🏳‍🌈 **effectList**
- 
+  具体详情见 effectList.md
 - 🎞 **updateQueue**
-   具体详细见 updateQueue.md
+  具体详细见 updateQueue.md
+- 🎨可中断的调和
+- 为什么需要可中断的调和？
+  - 1️⃣ 为了提高性能，避免主线程被长时间占用。
+  - 2️⃣ 为了避免阻塞主线程，提高用户体验。
+  - 3️⃣ 为了避免卡顿，提高用户体验。
+- 具体
+ - React Fiber 的中断机制本质是 任务切分 + 可控调度。React 把更新拆成一个个小的 Fiber 单元，执行完一个就能检查“是否中断”。调度器根据任务优先级，用 requestAnimationFrame / MessageChannel / requestIdleCallback 来决定“什么时候继续”。
+ - **requestIdleCallback** （react18以后用MessageChannel）
+   - 浏览器自带的一个api,适合低优先级任务。
+   - 什么时候执行？
+    - 浏览器空闲的时候执行（没有高优先级的任务的时候）
+   - 具体使用情况
+    - 参数 **deadline.timeRemaining()** → 可以告诉开发者“本次帧还剩下多少时间”。React 利用这个信息，决定“要不要继续执行下一个 Fiber 单元，还是先让出线程”
+    - React Fiber 就是利用 requestIdleCallback 来执行低优先级的调和任务（比如数据更新引发的 UI 更新），在空闲时分片执行，不阻塞用户操作
+ - **requestAnimationFrame**
+   - 浏览器自带的一个api，适合高优先级任务，比如用户输入&动画
+   - 什么时候执行？
+    - 如果是高优先级任务（比如动画，每一帧都要流畅渲染），那么就会用 requestAnimationFrame 来执行。
+ - **MessageChannel** 
