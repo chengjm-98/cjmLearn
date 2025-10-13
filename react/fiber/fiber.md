@@ -273,3 +273,10 @@ https://react.iamkasong.com/#%E7%AB%A0%E8%8A%82%E5%88%97%E8%A1%A8
    - 什么时候执行？
     - 如果是高优先级任务（比如动画，每一帧都要流畅渲染），那么就会用 requestAnimationFrame 来执行。
  - **MessageChannel** 
+   - 之前浏览器的调度使用的是 requestIdleCallback，但是后来弃用了，改为基于 MessageChannel react自己实现一个调度器。
+     - 弃用的原因
+       - 不稳定，不同的浏览器实现不一致问题，尤其是Safari
+       - 粒度粗，只能在浏览器认为空闲的时候执行，不能细粒度控制 
+       - 受限于帧调度
+   -  自研的调度器（基于messageChannel）
+  
