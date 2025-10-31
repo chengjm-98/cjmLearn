@@ -1,15 +1,32 @@
-<!--
- * @Author: jamie jamie.cheng@yuansuan.com
- * @Date: 2025-08-05 11:38:55
- * @LastEditors: jamie jamie.cheng@yuansuan.com
- * @LastEditTime: 2025-10-30 17:48:48
- * @FilePath: \cjmLearn\react\hooks.md
- * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
--->
-
 # react 常见的 hook
 
+## 什么是 hook
+
+- **管理状态&&处理副作用**
+- 组件尽量写成纯函数，如果有副作用，就使用 hook 把代码勾进来。
+- **Hook 只能在 React 函数组件的顶层或自定义 Hook 的顶层调用，不能在条件语句、循环或嵌套函数中调用。**
+  - ❓**为什么呢**？
+  - React 内部通过 Fiber 的 memoizedState 链表 存储每个 Hook 的状态，状态是按 Hook 调用顺序挂载的。如果调用顺序在不同渲染中发生变化，就会导致 Hook 获取错误的状态，从而产生不可预测的行为。
+
 ## 1.useState
+
+- **异步的**，setState 是异步的，不会立即更新 state，需要在下一次渲染才能拿到最新的值。
+- **批处理**，react 会把多次 setState 合并成一次 setState，这样可以减少渲染次数，提高性能。
+- **函数式更新**，setState 可以接受一个函数作为参数，这个函数会接收上一次的 state 作为参数，返回一个新的 state。
+
+  ```jsx
+  const [count, setCount] = useState(0);
+  setCount((prevCount) => prevCount + 1);
+  ```
+
+  ```md
+  **如何避免依赖陷阱**
+  什么是依赖陷阱？
+
+  依赖陷阱是指 useEffect 的依赖项没有包含外部状态，导致 useEffect 的回调函数始终捕获第一次渲染时的旧状态值，这就出现了“闭包陷阱（stale closure）”。
+
+  在多个连续更新或者闭包场景中，使用**函数式更新**可以确保读取的是最新的值，而不是闭包捕获的旧值。
+  ```
 
 ## 2.useEffect
 
@@ -70,15 +87,77 @@
 
 ## 3.useContext
 
+useContext 是 React 提供的一个 Hook，用于在函数组件中 直接读取 Context 的值，从而在组件树中实现 跨层级的数据共享（避免层层 props 传递）。
+
 ## 4.useReducer
 
 ## 5.useCallback
 
-缓存函数引用，避免不必要的函数创建和销毁。
+- 缓存函数引用，避免不必要的函数创建和销毁。
+- 缓存函数： useCallback 接受一个函数和一个依赖项数组作为参数。它会返回一个记忆过后的函数，只有当依赖项数组中的值发生变化时，它才会返回一个新的函数。
+- **已知前提：**在 React 中，函数在组件内每次渲染都会重新创建一个新的函数引用。也就是说，每次渲染，函数的引用都会发生变化。都是一个全新的函数。
+- 使用场景
 
-## 6.useMemot
+  #### 防止频繁触发 useEffect
 
-缓存计算结果，避免不必要的计算。
+  ```jsx
+  function ChatRoom({ roomId }) {
+    const [message, setMessage] = useState("");
+
+    function createOptions() {
+      return {
+        serverUrl: "https://localhost:1234",
+        roomId: roomId,
+      };
+    }
+    useEffect(() => {
+      const options = createOptions();
+      const connection = createConnection(options);
+      connection.connect();
+      return () => connection.disconnect();
+    }, [createOptions]); // 🔴 问题：这个依赖在每一次渲染中都会发生改变
+  }
+  ```
+
+  如果这么写就会导致，每次渲染都会触发 useEffect，因为 createOptions 是一个函数，每次渲染都会创建一个新的函数引用。  
+   而导致重新渲染的条件可能是别的比如 message 改变了。 这样就会导致频繁的断开链接出现问题。  
+   但是本意上，是希望比如这个组件第一次渲染的时候，就建立连接，然后在组件卸载的时候断开连接。  
+   所以我们可以使用 useCallback 来缓存 createOptions 函数，这样每次渲染的时候，createOptions 函数的引用都是相同的。  
+   这样就可以避免不必要的重新渲染。
+
+  #### 传给子组件的时候，跳过组件的重新渲染。与 react.memo 配合使用
+
+  ```jsx
+  <!-- 父组件 -->
+  function ParentComponent({ data }) {
+    const handleClick = useCallback(() => {
+      // 处理点击事件
+    }, []);
+
+    return <ChildComponent data={data} onClick={handleClick} />;
+  }
+  <!-- 子组件 -->
+  // ✅ 子组件
+  import { memo } from 'react';
+  const ChildComponent = memo(function ChildComponent({ data, onClick }) {
+  console.log('Child render'); // 用于观察渲染情况
+
+  return (
+    <div>
+      <button onClick={onClick}>Click me</button>
+      <p>{data}</p>
+    </div>
+  );
+  });
+  ```
+
+  如果不加 useCallBack，onClick 每次新的渲染都会是一个新的值，就算加上 memo 子组件每次都会重新渲染。所以必须加上 useCallback
+
+## 6.useMemo
+
+缓存计算结果，避免不必要的计算。（类似于 vue 中的计算 computed）
+
+- 用于缓存一些复杂的计算结果，避免每次渲染都重新计算。
 
 ## 7.useRef
 
@@ -91,5 +170,20 @@
 - 具体的使用情况
 - 💋 原理须知
   #### 为什么 useRef 可以保持同一个引用而 useState 每次都会重新渲染
+  因为所有的 Hook 状态（如 useState、useEffect、useRef 等）都会以链表结构存储在当前组件对应的 Fiber 节点的 memoizedState 属性上。
+  React 在每次组件重新渲染时，会沿着这条 Hook 链表顺序执行 Hook 调用，并复用上一次的 Hook 节点数据。
+- useRef
+
+  在初始化时，React 会创建一个 { current: initialValue } 的对象，并将这个对象存放在对应的 Hook 节点的 memoizedState 中。
+  在后续的渲染中，React 只是取出同一个对象引用返回（不会创建新对象），因此即使组件重新渲染，ref.current 依然指向同一个引用。
+
+- useState 则不同，它的 memoizedState 存放的是当前的 state 值，而当你调用 setState 时，React 会：
+  - 创建一个新的更新对象（update），放入 Hook 的更新队列；
+  - 调度一次重新渲染；
+  - 渲染时根据更新队列计算出新的 state；
+  - 如果新的 state 与旧的 state 不同，就会触发组件重新渲染。
+- 所以 useState 会触发重新渲染并更新 state 值，而 useRef 只是单纯地保存一个可变引用，不会引起重新渲染。
 
 # hook 的存储和调用以及原理
+
+# react 18 新特性，新 Hook

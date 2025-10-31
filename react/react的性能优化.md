@@ -4,8 +4,8 @@
 
 ### 1.使用 useMemo 和 useCallback
 
-- useMemo：
-- useCallback：
+- useMemo
+- useCallback
 
 ### 2.设置唯一的 key 值
 
