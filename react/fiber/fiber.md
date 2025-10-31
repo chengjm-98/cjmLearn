@@ -249,34 +249,33 @@ https://react.iamkasong.com/#%E7%AB%A0%E8%8A%82%E5%88%97%E8%A1%A8
   - 💖 **介绍一下 lanes 的工作方式**
     具体看 lanes.md
 - **fiber 在更新的时候做的事情**
- - 具体查看【一个详细具体的流程.md】
+- 具体查看【一个详细具体的流程.md】
 - 🏳‍🌈 **effectList**
   具体详情见 effectList.md
 - 🎞 **updateQueue**
   具体详细见 updateQueue.md
-- 🎨可中断的调和
+- 🎨 可中断的调和
 - 为什么需要可中断的调和？
   - 1️⃣ 为了提高性能，避免主线程被长时间占用。
   - 2️⃣ 为了避免阻塞主线程，提高用户体验。
   - 3️⃣ 为了避免卡顿，提高用户体验。
 - 具体
- - React Fiber 的中断机制本质是 任务切分 + 可控调度。React 把更新拆成一个个小的 Fiber 单元，执行完一个就能检查“是否中断”。调度器根据任务优先级，用 requestAnimationFrame / MessageChannel / requestIdleCallback 来决定“什么时候继续”。
- - **requestIdleCallback** （react18以后用MessageChannel）
-   - 浏览器自带的一个api,适合低优先级任务。
-   - 什么时候执行？
-    - 浏览器空闲的时候执行（没有高优先级的任务的时候）
-   - 具体使用情况
-    - 参数 **deadline.timeRemaining()** → 可以告诉开发者“本次帧还剩下多少时间”。React 利用这个信息，决定“要不要继续执行下一个 Fiber 单元，还是先让出线程”
-    - React Fiber 就是利用 requestIdleCallback 来执行低优先级的调和任务（比如数据更新引发的 UI 更新），在空闲时分片执行，不阻塞用户操作
- - **requestAnimationFrame**
-   - 浏览器自带的一个api，适合高优先级任务，比如用户输入&动画
-   - 什么时候执行？
-    - 如果是高优先级任务（比如动画，每一帧都要流畅渲染），那么就会用 requestAnimationFrame 来执行。
- - **MessageChannel** 
-   - 之前浏览器的调度使用的是 requestIdleCallback，但是后来弃用了，改为基于 MessageChannel react自己实现一个调度器。
-     - 弃用的原因
-       - 不稳定，不同的浏览器实现不一致问题，尤其是Safari
-       - 粒度粗，只能在浏览器认为空闲的时候执行，不能细粒度控制 
-       - 受限于帧调度
-   -  自研的调度器（基于messageChannel）
-  
+- React Fiber 的中断机制本质是 任务切分 + 可控调度。React 把更新拆成一个个小的 Fiber 单元，执行完一个就能检查“是否中断”。调度器根据任务优先级，用 requestAnimationFrame / MessageChannel / requestIdleCallback 来决定“什么时候继续”。
+- **requestIdleCallback** （react18 以后用 MessageChannel）
+  - 浏览器自带的一个 api,适合低优先级任务。
+  - 什么时候执行？
+  - 浏览器空闲的时候执行（没有高优先级的任务的时候）
+  - 具体使用情况
+  - 参数 **deadline.timeRemaining()** → 可以告诉开发者“本次帧还剩下多少时间”。React 利用这个信息，决定“要不要继续执行下一个 Fiber 单元，还是先让出线程”
+  - React Fiber 就是利用 requestIdleCallback 来执行低优先级的调和任务（比如数据更新引发的 UI 更新），在空闲时分片执行，不阻塞用户操作
+- **requestAnimationFrame**
+  - 浏览器自带的一个 api，适合高优先级任务，比如用户输入&动画
+  - 什么时候执行？
+  - 如果是高优先级任务（比如动画，每一帧都要流畅渲染），那么就会用 requestAnimationFrame 来执行。
+- **MessageChannel**
+  - 之前浏览器的调度使用的是 requestIdleCallback，但是后来弃用了，改为基于 MessageChannel react 自己实现一个调度器。
+    - 弃用的原因
+      - 不稳定，不同的浏览器实现不一致问题，尤其是 Safari
+      - 粒度粗，只能在浏览器认为空闲的时候执行，不能细粒度控制
+      - 受限于帧调度
+  - 自研的调度器（基于 messageChannel）
