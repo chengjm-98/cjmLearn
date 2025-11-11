@@ -24,5 +24,5 @@ git config --global --unset https.proxy
 git init 初始化仓库
 git add . 把所有文件添加到暂存区
 git commit -m "first commit" 提交到本地仓库
-git remote add origin 仓库地址 关联远程仓库
+git remote add origin git@github.com:chengjm-98/mianyang.git仓库地址 关联远程仓库
 git push -u origin master 推送到远程仓库
