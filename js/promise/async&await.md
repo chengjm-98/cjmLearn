@@ -1,5 +1,8 @@
 # async&await
-
+```jsx
+async = Promise 工厂
+await = Promise 解包器
+```
 async 和 await 是 promise 的语法糖，它们可以让我们以同步的方式编写异步代码。
 
 - async 一定会返回一个 promise
