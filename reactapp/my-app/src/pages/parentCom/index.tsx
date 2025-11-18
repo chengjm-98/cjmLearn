@@ -1,22 +1,20 @@
 import { useState, useRef, useEffect } from "react";
 import { Button } from "antd";
+
 export const ParentCom = () => {
-  const [count, setCount] = useState(0);
-  const asyncFun = async()=>{
-   return 11;''
-  }
-  useEffect(()=>{
-    const myFun = async()=>{
-  const data = await asyncFun();
-   console.log('看一下async的返回值',data)
-    
-    }
-  myFun();
-   
-  },[])
+  const fakeApi = () => {
+    throw new Promise((resolve, reject) => {
+      setTimeout(() => {
+        resolve("加载完成");
+      }, 2000);
+    }).then((res) => {
+      return res;
+    });
+  };
+  const data = fakeApi(); // ← 渲染中直接 throw
   return (
     <>
-      <Button onClick={() => setCount(count + 1)}>change</Button>
+      <Button>加载完成{data}</Button>
     </>
   );
 };
