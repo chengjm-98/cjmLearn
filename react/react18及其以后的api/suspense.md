@@ -43,4 +43,5 @@
 - React Query / SWR 的 Suspense 模式
 
 - 它们内部封装 resource，保证 render 阶段调用 read() 就会 throw Promise，页面加载时直接挂起 → Suspense fallback
+
 - **所以 Suspense 的 核心价值在于“render 阶段可挂起的异步组件”，而不是在任何异步操作都能自动挂起。**
