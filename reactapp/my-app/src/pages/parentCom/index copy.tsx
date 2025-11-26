@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import styled, { keyframes, css } from "styled-components";
+import styled from "styled-components";
 import { Input } from "antd";
 
 const PageWrapper = styled.div`
@@ -7,19 +7,9 @@ const PageWrapper = styled.div`
   height: 100vh;
   position: relative;
   overflow: hidden;
-  background-color: #218ec5;
+  background-color: #00aaff;
   background-size: cover;
   background-position: center;
-`;
-
-// 动态创建动画
-const createGrowAnimation = (targetBottom: string) => keyframes`
-  from {
-    bottom: 1%;
-  }
-  to {
-    bottom: ${targetBottom};
-  }
 `;
 
 interface BarProps {
@@ -32,16 +22,10 @@ const Bar = styled.div<BarProps>`
   left: 50%;
   transform: translateX(-50%);
   width: 20px;
-  background: rgba(244, 8, 8, 0.8);
-  bottom: 1%; /* 初始位置 */
+  background: rgba(186, 185, 185, 1);
+  bottom: ${({ targetBottom }) => targetBottom + "%"}; /* 动态底部位置 */
   top: 20%;
-  transition: bottom 0.2s linear;
-
-  ${({ isPlaying, targetBottom }) =>
-    isPlaying &&
-    css`
-      animation: ${createGrowAnimation(targetBottom)} 2s forwards;
-    `}
+  transition: bottom 2s linear; /* 使用 transition 动画 */
 `;
 
 const ButtonBar = styled.div`
@@ -60,35 +44,36 @@ const Btn = styled.button`
 
 const AnimatedBarPage = () => {
   const [isPlaying, setIsPlaying] = useState(false);
-  const [animationKey, setAnimationKey] = useState(0); // 用来控制重新渲染
-  const [targetPosition, setTargetPosition] = useState<string>("1"); // 默认目标位置 40%
+  const [animationKey, setAnimationKey] = useState(0);
+  const [targetPosition, setTargetPosition] = useState<string>("40"); // 默认目标位置 40%
 
   // 更新目标位置
   const handlePositionChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    console.log("输入input", e.target.value);
     setTargetPosition(e.target.value);
   };
 
   const handlePlay = () => {
-    setIsPlaying(true); // 播放
+    setIsPlaying(true); // 设置为播放
   };
 
   const handleReplay = () => {
-    setIsPlaying(false);
-    setAnimationKey((k) => k + 1); // 重新触发动画
-    setTimeout(() => setIsPlaying(true), 50); // 等待一会再播放动画
+    setIsPlaying(false); // 停止动画
+    setAnimationKey((k) => k + 1); // 重新触发组件渲染
+    setTimeout(() => setIsPlaying(true), 50); // 立即播放动画
   };
 
   const handleReset = () => {
     setIsPlaying(false); // 停止动画
-    setAnimationKey((k) => k + 1); // 强制重新渲染 Bar
+    setAnimationKey((k) => k + 1); // 强制重新渲染组件
   };
 
   return (
     <PageWrapper>
       <Bar
-        key={animationKey} // 使用 key 强制重新渲染
+        key={animationKey}
         isPlaying={isPlaying}
-        targetBottom={`${targetPosition}%`}
+        targetBottom={targetPosition} // 动态传递目标位置
       />
 
       <ButtonBar>
