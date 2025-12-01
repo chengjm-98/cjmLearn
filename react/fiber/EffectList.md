@@ -71,6 +71,7 @@ function Parent({ count }) {
 - updateQueue 是什么
 - updateQueue 是更新对象的队列，每个 update 对象记录一次 state/props/context/forceUpdate 的更新请求。它的作用是 在 render 阶段计算 fiber 的新 state/props。
 - 所以 updateQueue 服务于 render 阶段的 “计算工作”。
+
   举个 🌰：
 
 ```jsx
