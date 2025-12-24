@@ -1,3 +1,12 @@
+<!--
+ * @Author: error: error: git config user.name & please set dead value or install git && error: git config user.email & please set dead value or install git & please set dead value or install git
+ * @Date: 2025-11-25 18:04:31
+ * @LastEditors: error: error: git config user.name & please set dead value or install git && error: git config user.email & please set dead value or install git & please set dead value or install git
+ * @LastEditTime: 2025-12-17 21:26:00
+ * @FilePath: /cjmLearn/react/性能优化/react的性能优化.md
+ * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+-->
+
 # react 的性能优化（开发者能做哪些操作）
 
 ## 编写组件时的优化
@@ -15,6 +24,8 @@
 ### 3.不使用匿名函数
 
 ### 4.使用 React.memo 包裹组件
+
+- 对于函数组件，使用 React.memo 包裹组件，可以防止组件不必要的更新。可以保证只有当组件的 props 发生变化时，组件才会重新渲染。别的比如父组件渲染啦啥的都不会影响子组件的渲染。
 
 ## 状态管理阶段的优化
 
