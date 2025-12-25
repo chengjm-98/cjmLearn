@@ -1,12 +1,3 @@
-<!--
- * @Author: error: error: git config user.name & please set dead value or install git && error: git config user.email & please set dead value or install git & please set dead value or install git
- * @Date: 2025-12-18 21:12:37
- * @LastEditors: error: error: git config user.name & please set dead value or install git && error: git config user.email & please set dead value or install git & please set dead value or install git
- * @LastEditTime: 2025-12-24 17:32:17
- * @FilePath: /cjmLearn/webpack1/webpack的loader和plugins.md
- * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
--->
-
 # loader
 
 - loader 本质上是一个 node.js 的函数，接受一个东西然后经过处理再返回一个东西。**「内容的转换」**，返回 webpack 可以处理的内容。

@@ -1,12 +1,3 @@
-<!--
- * @Author: error: error: git config user.name & please set dead value or install git && error: git config user.email & please set dead value or install git & please set dead value or install git
- * @Date: 2025-12-18 21:08:53
- * @LastEditors: error: error: git config user.name & please set dead value or install git && error: git config user.email & please set dead value or install git & please set dead value or install git
- * @LastEditTime: 2025-12-24 15:47:27
- * @FilePath: /cjmLearn/webpack1/webpack的工作流程.md
- * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
--->
-
 # 工作流程
 
 链接：https://juejin.cn/post/7154192670326259719
@@ -52,9 +43,9 @@ module.exports = {
 };
 ```
 
-## 初始化
+## 初始化（启动阶段）
 
-- 从配置文件（webpack.config.js）和 Shell 语句中读取与合并参数，得出最终的配置结果。比如入口文件，loader 和 plugins 等。
+- 从配置文件（webpack.config.js）和 Shell 语句中读取与合并参数，得出最终的配置结果。比如入口文件，loader 和 plugins 等。创建一个**compiler**实例，作为整个打包过程的核心。
 
 ## 构建依赖图
 
@@ -69,9 +60,36 @@ module.exports = {
   - 有助于热更新
     - 可以精准的知道哪个模块变了，哪个模块依赖了它，从而只更新受到影响的模块。
 
-## 使用 loader
+## 构建阶段
 
-- webpack 本身只处理 javascript 模块，如果要处理其他类型的文件，就需要使用 loader。
+### 生成模块
+
+如果模块是一个 javascript 文件，webpack 会将其解析成一个 javascript 模块。如果不是，那就会使用对应的 loader 来处理。
+
+- webpack 本身只处理 javascript 模块，如果要处理其他类型的文件，就需要使用 loader。  
   **什么是 loader，一些常见的 loader** 具体看 loader 和 plugins.md
 
-##
+### 生成 chunk
+
+在构建阶段，Webpack 会将所有模块按照配置的方式进行分割，生成一个或多个 chunk。每个 chunk 包含一组相互依赖的模块，并最终会输出到文件中。
+
+**什么是 chunk**  
+ chunk 是 webpack 在构建过程中产生的打包单元，是 webpack 打包的最小单位。会将模块组织成一个或者多个 chunk，然后最后合成成 output 文件「bundle」。
+
+**chunk 分类**关于 chunk 我们额外加个文件具体介绍吧。
+
+- 入口 chunk：由 entry 指定的入口文件生成的 chunk。
+- 异步 chunk：在代码中动态导入的模块生成的 chunk。
+- 代码分割 chunk：使用 splitChunksPlugin 等插件生成的 chunk。
+- common chunk：多个 chunk 之间共享的模块生成的 chunk。
+
+## 优化阶段
+
+### 使用插件来进行优化（插件不一定全部在这个阶段，任何阶段都有可能）
+
+- 使用插件来进行优化，比如使用 TerserPlugin 来压缩代码，使用 SplitChunksPlugin 来分割代码，使用 DedupePlugin 来去除重复的模块，使用 tree-shaking 来去除未使用的模块等。
+
+## 输出阶段（输出 output）
+
+在输出阶段，Webpack 会将生成的 chunk 输出到文件中。这个过程包括将 chunk 中的模块合并成一个文件，然后将这个文件输出到指定的目录中。通常是 dist 或者 build 目录。  
+hash：webpack 会给每个输出文件一个唯一的 hash 值，这个 hash 值是根据文件内容计算出来的。如果文件内容没有变化，那么 hash 值也不会变化。确保文件缓存和版本控制。
