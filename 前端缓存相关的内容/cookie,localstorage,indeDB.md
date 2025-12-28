@@ -1,0 +1,5 @@
+# cookie
+
+# localStorage
+
+# indexDB
