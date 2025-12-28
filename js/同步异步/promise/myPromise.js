@@ -88,4 +88,3 @@ const p1 = new MyPromise((resolve, reject) => {
 //1. 状态只能由pending到fulfilled或者rejected，一旦确定就不能再改变
 //2. .then 链式调用，返回的是一个新的promise
 //3. 等待状态改变后才能触发.then的回调函数
-//4.
