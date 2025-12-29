@@ -176,6 +176,6 @@ const handlePageSwitch = () => {
 在 HTTP/2 场景下这一点尤为重要。
 ```
 
-# ReadableStream(真流式)
+# ReadableStream(真流式)配合 fetch 实现
 
 ReadableStream 是 Web Streams API 的一部分，
