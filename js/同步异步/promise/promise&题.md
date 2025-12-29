@@ -10,6 +10,8 @@
    - 先执行当前微任务队列中的所有任务。
    - 微任务中可以继续产生新的微任务，这些也会在本轮循环中立即执行，直到微任务队列清空。
 4. 微任务队列清空后，浏览器会进行一次页面渲染（如果有变化）。
+   - 微任务执行完成后，浏览器会执行渲染操作（如果有的话），如重新绘制页面、更新视图等。
+   - 渲染操作的目的是确保用户能够看到最新的界面变化。
 5. 然后取出一个宏任务执行（例如：setTimeout、setInterval、DOM 事件）。
 6. 宏任务执行过程中如果派生出微任务，则宏任务结束后马上执行这些微任务。
 7. 宏任务执行过程中如果派生出宏任务，则将派生出来的宏任务加到宏任务队列尾部，等待之后执行。
@@ -18,7 +20,7 @@
 注意：
 
 - 微任务示例：`Promise.then`、`MutationObserver`
-- 宏任务示例：`setTimeout`、`setInterval`、`MessageChannel`、`requestAnimationFrame`
+- 宏任务示例：`setTimeout`、`setInterval`、`MessageChannel`、`requestAnimationFrame`、`fetch`
 
 # 一些 promise 的题/异步同步事件循环
 

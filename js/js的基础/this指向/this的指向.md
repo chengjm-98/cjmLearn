@@ -1,6 +1,15 @@
+<!--
+ * @Author: error: error: git config user.name & please set dead value or install git && error: git config user.email & please set dead value or install git & please set dead value or install git
+ * @Date: 2025-12-28 20:58:04
+ * @LastEditors: error: error: git config user.name & please set dead value or install git && error: git config user.email & please set dead value or install git & please set dead value or install git
+ * @LastEditTime: 2025-12-30 00:09:43
+ * @FilePath: /cjmLearn/js/js的基础/this指向/this的指向.md
+ * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+-->
+
 # this 的指向
 
-his 的指向是在运行时决定的，this 的指向由**函数执行时**动态决定，它通常依赖于**函数的调用方式**而不是函数定义的位置。
+this 的指向是在运行时决定的，this 的指向由**函数执行时**动态决定，它通常依赖于**函数的调用方式**而不是函数定义的位置。
 
 ## 普通函数
 

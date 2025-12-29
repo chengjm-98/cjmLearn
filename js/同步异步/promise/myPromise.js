@@ -12,6 +12,7 @@ class MyPromise {
   constructor(executor) {
     this.status = MyPromise.PENDING; //默认状态
     if (executor) {
+      //executor是一个函数
       executor(this.resolve.bind(this), this.reject.bind(this));
     }
   }

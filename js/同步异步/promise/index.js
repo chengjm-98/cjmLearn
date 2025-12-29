@@ -61,6 +61,9 @@ class MyPromise {
       };
 
       // 三种状态处理
+      // 如果状态是 FULFILLED，直接将 fulfilledHandler 添加到微任务队列中（使用 queueMicrotask，这是为了确保回调在当前任务队列之后执行，模拟 Promise 的微任务行为）。
+      // 如果状态是 REJECTED，将 rejectedHandler 添加到微任务队列中。
+      // 如果状态是 PENDING，说明 Promise 还没有完成，回调函数会被暂时保存到队列中，等状态改变时再执行。
       if (this.status === MyPromise.FULFILLED) {
         // 微任务模拟（更接近真实 MyPromise）
         queueMicrotask(fulfilledHandler);
