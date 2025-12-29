@@ -85,6 +85,10 @@ console.log(person.sayHello()); // 输出 "HelloNow!Alice"
 
 # 静态属性
 
+- 静态属性 实例不能访问，只有类本身能访问。
+- 静态属性可以被子类继承，但是也是只有类本身可以访问。
+- 静态属性是通过**浅拷贝**实现继承的。如果属性是基本是数据类型，不会互相影响，但是如果是一个对象，那么子类的静态属性也会指向这个对象，因为浅拷贝只会拷贝对象的内存地址。
+
 ```js
 class Person {
   static species = "Homo sapiens";
@@ -102,6 +106,10 @@ console.log(Person.species); // 输出 "Homo sapiens"
 ```
 
 ## console.log(Object.getOwnPropertyDescriptor(Person.prototype, "sayHello"));
+
+# 实例属性
+
+- 实例属性继承需要使用 super();
 
 # 私有属性
 
