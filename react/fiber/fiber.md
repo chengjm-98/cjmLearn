@@ -6,7 +6,7 @@ https://react.iamkasong.com/#%E7%AB%A0%E8%8A%82%E5%88%97%E8%A1%A8
 - ## 先了解一下虚拟 DOM
 - ### 什么是虚拟 DOM
 
-  - 虚拟 DOM 是由 React.createElement()方法创建的一个 JavaScript 对象，它代表了真实 DOM 的一个抽象。
+  - 虚拟 DOM 是由 **React.createElement()**方法创建的一个 JavaScript 对象，它代表了真实 DOM 的一个抽象。
   - 它存在运行时内存里面(**随机存取存储器 RAM**)
     - ⭐RAM 是 CPU 用来快速读写数据的地方，和硬盘不太一样，内存的数据是临时的，断电或者刷新页面就会丢失。
   - 🏃‍♀️ 三个步骤：
