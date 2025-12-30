@@ -1,6 +1,12 @@
 # startTransition 用于非紧急更新
 
 ```jsx
+  const handleClick = () => {
+    startTransition(() => {
+      // 假设这是一个需要做异步操作的操作
+      setStart(true);
+    });
+  };
 - startTransition 是 React 18 新增的 API，用于标记 非紧急更新（transitions），让 React 将某些更新的优先级降低，从而保持 UI 的响应性。
 
   - 紧急更新（urgent update）：用户输入、点击、滚动等需要立即响应的操作。
@@ -27,7 +33,8 @@
 
 ### Q3：startTransition 可以和 Suspense 配合吗？
 
-可以，用于骨架屏或渐进式渲染，提高用户体验。
+- 可以，用于骨架屏或渐进式渲染，提高用户体验。
+- startTransition 优化了更新的优先级，而 Suspense 则提供了一个优雅的 loading 体验。通过这两个功能的配合，React 能够更好地实现渐进式渲染和无缝的用户交互体验。
 
 #### 具体配合使用方法
 

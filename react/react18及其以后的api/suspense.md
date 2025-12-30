@@ -19,7 +19,7 @@
 
 - 1.捕获 promise
 
-- 2.只能捕获 render 阶段的 promise 的错误
+- 2.只能捕获 render 阶段的 promise 的错误，捕获不到 useEffect 中的，因为 useEffect 是在 commit 阶段执行的。
 
 ## 一个疑问
 
