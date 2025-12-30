@@ -87,8 +87,8 @@ this.setState({ count: this.state.count + 1 });
   举个 🌰：
 
 ```jsx
-this.setState({count: this.state.count + 1});
-<div>{this.state.count}</div>~
+this.setState({ count: this.state.count + 1 });
+<div>{this.state.count}</div>;
 ```
 
 这样如果有副作用产生，比如这个 🌰 中，有 dom 的变化，就会产生 updateQueue。

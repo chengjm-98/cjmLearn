@@ -7,6 +7,7 @@
 - **Hook 只能在 React 函数组件的顶层或自定义 Hook 的顶层调用，不能在条件语句、循环或嵌套函数中调用。**
   - ❓**为什么呢**？
   - React 内部通过 Fiber 的 memoizedState 链表 存储每个 Hook 的状态，状态是按 Hook 调用顺序挂载的。如果调用顺序在不同渲染中发生变化，就会导致 Hook 获取错误的状态，从而产生不可预测的行为。
+  - updateQueue 也是按 Hook 调用顺序挂载的。所以 Hook 能在条件语句、循环或嵌套函数中调用。
 
 ## 1.useState
 

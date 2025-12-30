@@ -145,7 +145,7 @@ https://react.iamkasong.com/#%E7%AB%A0%E8%8A%82%E5%88%97%E8%A1%A8
         ```
     - 3️⃣ 调度（Scheduling）
       - fiber 是可中断的，react 内部通过 Scheduler 来进行 CPU 的时间分片分配。
-    - 4️⃣ 渲染（Rendering）
+    - 4️⃣ 渲染/调和（Rendering）
       - 遍历 workInProgress Fiber 树，收集更新副作用链表（effect list）。这一步只在内存里面完成。
     - 5️⃣ 提交（Commit）
       - 一旦渲染完成，React 把 effect list 应用到到真实 DOM 中，完成视图更新。
