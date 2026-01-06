@@ -176,6 +176,60 @@ const handlePageSwitch = () => {
 在 HTTP/2 场景下这一点尤为重要。
 ```
 
-# ReadableStream(真流式)配合 fetch 实现
+# 大文件的分块流式加载
+
+- 流式：一边下载/上传一边处理，避免占用大量内存。
+- 分块：把大文件拆成多个小块（chunk），按顺序加载/上传。
+
+## ReadableStream(真流式)配合 fetch 实现
 
 ReadableStream 是 Web Streams API 的一部分，
+
+## http 的 range 请求
+
+- HTTP 的 Range 请求 是一种 按字节范围请求资源 的机制，它允许客户端只获取文件的一部分，而不是一次性下载整个文件
+- Range: bytes=<start>-<end>
+
+```jsx
+async function fetchChunk(url, start, end) {
+  const response = await fetch(url, {
+    headers: {
+      Range: `bytes=${start}-${end}`,
+    },
+  });
+  return response.arrayBuffer(); // 返回二进制
+}
+
+async function downloadLargeFile(url, chunkSize = 1024 * 1024) {
+  // 1MB
+  // 获取文件大小
+  const headResp = await fetch(url, { method: "HEAD" });
+  const size = Number(headResp.headers.get("Content-Length"));
+
+  let offset = 0;
+  const chunks = [];
+
+  while (offset < size) {
+    const end = Math.min(offset + chunkSize - 1, size - 1);
+    const chunk = await fetchChunk(url, offset, end);
+    chunks.push(chunk);
+    offset += chunkSize;
+    console.log(`Downloaded ${offset}/${size}`);
+  }
+
+  // 合并 ArrayBuffer
+  const totalBuffer = new Uint8Array(size);
+  let position = 0;
+  for (const chunk of chunks) {
+    totalBuffer.set(new Uint8Array(chunk), position);
+    position += chunk.byteLength;
+  }
+
+  // 生成 Blob 下载
+  const blob = new Blob([totalBuffer]);
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = "large_file.bin";
+  a.click();
+}
+```
