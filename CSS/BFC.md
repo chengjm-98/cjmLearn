@@ -24,7 +24,7 @@ BFC（Block Formatting Context，块级格式化上下文）的本质其实是 �
 表格单元格（display 值为 table-cell，HTML 表格单元格默认值）。
 表格标题（display 值为 table-caption，HTML 表格标题默认值）。
 匿名表格单元格元素（display 值为 table（HTML 表格默认值）、table-row（表格行默认值）、table-row-group（表格体默认值）、table-header-group（表格头部默认值）、table-footer-group（表格尾部默认值）或 inline-table）。
-overflow 值不为 visible 或 clip 的块级元素。
+overflow 值不为 visible 或 clip 的块级元素。 overflow 除了 visible 以外的值还有 hidden、scroll、auto 或 overlay。
 display 值为 flow-root 的元素。
 contain 值为 layout、content 或 paint 的元素。
 弹性元素（display 值为 flex 或 inline-flex 元素的直接子元素），如果它们本身既不是弹性、网格也不是表格容器。

@@ -1,12 +1,3 @@
-<!--
- * @Author: error: error: git config user.name & please set dead value or install git && error: git config user.email & please set dead value or install git & please set dead value or install git
- * @Date: 2025-12-28 23:47:04
- * @LastEditors: error: error: git config user.name & please set dead value or install git && error: git config user.email & please set dead value or install git & please set dead value or install git
- * @LastEditTime: 2025-12-29 00:39:41
- * @FilePath: /cjmLearn/chrome/输入一个url后浏览器的过程.md
- * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
--->
-
 ## 1.解析 url
 
 ## 2. DNS 查询
