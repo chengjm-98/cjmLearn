@@ -81,7 +81,15 @@ promise 能支持链式调用的原因，是因为.then()、.catch() 和 .finall
     ````
 
   - Promise.race()
+    它接受一个可迭代的对象（通常是数组），里面是多个 Promise 实例或普通值。
+    返回值：一个新的 Promise。
+    执行逻辑：
+    第一个 Promise 成功（fulfilled）或失败（rejected）：立即返回这个 Promise 的结果。
   - Promise.any()
+    它接受一个可迭代的对象（通常是数组），里面是多个 Promise 实例或普通值。
+    返回值：一个新的 Promise。
+    执行逻辑：
+    第一个 Promise 成功（fulfilled）：立即返回这个 Promise 的结果。
 
 ## 实例方法
 

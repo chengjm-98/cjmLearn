@@ -12,3 +12,28 @@ ast 树是编译的中间产物。它是源代码语法结构的一种抽象表�
 - Babel：一个流行的 JavaScript 转译器，可以通过 @babel/parser 来解析 JavaScript 代码并生成 AST。
 - Esprima：另一个用于解析 JavaScript 代码的库，可以生成 AST。
 - AST Explorer：一个在线工具，可以让你输入 JavaScript 代码并生成 AST，同时支持多种语言和解析器。 https://astexplorer.net/
+
+# 用法
+
+前端中的 Babel、ESLint、Prettier 等工具，都是基于 AST 来对代码进行分析、转译和优化的。
+
+# 示例
+
+```js
+function add(x, y) {
+  return x + y;
+}
+
+Program
+ └── FunctionDeclaration
+      ├── Identifier (add)
+      ├── Params
+      │    ├── Identifier (x)
+      │    └── Identifier (y)
+      └── BlockStatement
+           └── ReturnStatement
+                └── BinaryExpression (+)
+                     ├── Identifier (x)
+                     └── Identifier (y)
+
+```
