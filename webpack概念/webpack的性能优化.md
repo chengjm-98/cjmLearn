@@ -115,6 +115,50 @@ module.exports = {
 
 ## 动态导入
 
+动态 import（最重要）
+
+- 在有需要的时候再引入
+
+```jsx
+button.onclick = () => {
+  import("./math").then(({ add }) => {
+    add(1, 2);
+  });
+};
+```
+
+比如 echert
+先封装一个 echart 组件，然后在需要的地方引入
+
+```jsx
+
+// EChartsView.tsx
+import * as echarts from 'echarts';
+
+export default function EChartsView() {
+  useEffect(() => {
+    const chart = echarts.init(document.getElementById('chart')!);
+    chart.setOption({
+      xAxis: { type: 'category', data: ['Mon', 'Tue'] },
+      yAxis: { type: 'value' },
+      series: [{ data: [120, 200], type: 'bar' }]
+    });
+
+    return () => chart.dispose();
+  }, []);
+
+  return <div id="chart" style={{ height: 300 }} />;
+}
+const LazyECharts = React.lazy(
+  () => import(/* webpackChunkName: "echarts-view" */ './EChartsView')
+);
+
+<Suspense fallback={<div>图表加载中...</div>}>
+  <LazyECharts />
+</Suspense>
+
+```
+
 ## 公共代码分离
 
 当多个入口文件（app.js, admin.js 等）共享相同的依赖时，Webpack 会将这些公共代码提取到一个单独的文件中，避免在多个文件中重复加载相同的模块。
