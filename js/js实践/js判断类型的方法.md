@@ -17,6 +17,7 @@
 2. 利用 instanceof
 
 - instanceof 用来判断一个对象是否是某个类的实例。它适用于对象和类（构造函数）。
+- 某个对象是否在某个构造函数的原型链上
 
   ```js
   [1, 2, 3] instanceof Array // true

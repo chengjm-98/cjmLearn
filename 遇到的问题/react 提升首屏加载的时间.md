@@ -7,13 +7,21 @@
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
 
+## 虚拟列表/懒加载
+
+## 流式加载
+
+## 全局的 store 控制
+
+## 不要透传过渡
+
 ## webpack 代码分割
 
 ## 开启浏览器缓存
 
-## 使用 React.memo 减少不必要的渲染
+## 使用 React.memo 减少不必要的渲染/增加 key
 
-## 使用 React.lazy 实现懒加载
+## 使用 React.lazy 配合 suspense 实现懒加载
 
 # react 假如首屏，有两个模块的接口非常慢，怎么提高首屏加载时间
 
@@ -53,4 +61,4 @@ function App() {
 
 ## webpack 配合，压缩&摇树
 
-## next.js
+## 把一些首屏不需要的模块，不要打包到一起

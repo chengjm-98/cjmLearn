@@ -96,20 +96,6 @@ Webpack 提供了 代码分离（Code Splitting） 功能，可以帮助将大�
 ## 入口点分离
 
 - 在 Webpack 中，我们可以通过 entry 配置来指定多个入口点。这会使 Webpack 为每个入口文件生成一个单独的 JavaScript 文件。
-
-```js
-module.exports = {
-  entry: {
-    app: "./src/app.js",
-    admin: "./src/admin.js", // 将 admin 页面单独拆分
-  },
-  output: {
-    filename: "[name].[contenthash].js", // [name] 会被替换为 'app' 或 'admin'
-    path: path.resolve(__dirname, "dist"),
-  },
-};
-```
-
 - 效果
   - Webpack 会为 app.js 和 admin.js 创建两个独立的文件。每个页面只加载所需的文件，而不是一次加载所有代码。
 
@@ -118,17 +104,8 @@ module.exports = {
 动态 import（最重要）
 
 - 在有需要的时候再引入
-
-```jsx
-button.onclick = () => {
-  import("./math").then(({ add }) => {
-    add(1, 2);
-  });
-};
-```
-
-比如 echert
-先封装一个 echart 组件，然后在需要的地方引入
+  比如 echert
+  先封装一个 echart 组件，然后在需要的地方引入
 
 ```jsx
 
@@ -164,17 +141,53 @@ const LazyECharts = React.lazy(
 当多个入口文件（app.js, admin.js 等）共享相同的依赖时，Webpack 会将这些公共代码提取到一个单独的文件中，避免在多个文件中重复加载相同的模块。
 使用 optimization.splitChunks 配置来提取公共代码。splitChunks 允许 Webpack 自动分离出重复的模块（如 React、lodash 等）并将其放入单独的文件中。
 
+## 总的代码实现
+
 ```jsx
+// webpack.config.js
+const path = require("path");
+
 module.exports = {
+  //入口点分离
+  entry: {
+    app: "./src/index.js",
+    admin: "./src/admin.js",
+  },
+  output: {
+    filename: "[name].[contenthash].js", // 使用 contenthash 便于缓存
+    path: path.resolve(__dirname, "dist"),
+    clean: true, // 打包前清理 dist
+  },
   optimization: {
     splitChunks: {
-      chunks: "all", // 分割所有的模块（包括异步和同步的模块）
-      minSize: 20000, // 最小文件大小 20KB
-      maxSize: 70000, // 最大文件大小 70KB
-      automaticNameDelimiter: "-", // 分割文件名时的分隔符
-      name: "vendors", // 自定义输出的文件名
+      chunks: "all", // async 异步 + initial 初始 + all 全部
+      minSize: 20000, // 最小分割大小
+      maxSize: 0, // 最大分割大小（0 表示不限制）
+      minChunks: 1, // 模块最少被引用次数
+      cacheGroups: {
+        echarts: {
+          test: /[\\/]node_modules[\\/]echarts[\\/]/,
+          name: "echarts",
+          chunks: "all",
+          priority: 20,
+        },
+        // 第三方库单独打包
+        vendor: {
+          test: /[\\/]node_modules[\\/]/,
+          name: "vendors",
+          chunks: "all",
+        },
+        // 公共模块打包
+        commons: {
+          name: "commons",
+          minChunks: 2, // 至少被两个入口共享
+          priority: 10,
+          reuseExistingChunk: true,
+        },
+      },
     },
   },
+  mode: "production",
 };
 ```
 
