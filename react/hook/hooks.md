@@ -185,6 +185,8 @@ useContext 是 React 提供的一个 Hook，用于在函数组件中 直接读�
   - 如果新的 state 与旧的 state 不同，就会触发组件重新渲染。
 - 所以 useState 会触发重新渲染并更新 state 值，而 useRef 只是单纯地保存一个可变引用，不会引起重新渲染。
 
+## 8.useLayoutEffect
+
 # 各个 hook 在 react 中的时间段
 
 # React Hook 执行阶段与特点
