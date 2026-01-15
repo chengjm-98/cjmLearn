@@ -1,10 +1,114 @@
-<!--
- * @Author: error: error: git config user.name & please set dead value or install git && error: git config user.email & please set dead value or install git & please set dead value or install git
- * @Date: 2025-12-29 18:02:50
- * @LastEditors: error: error: git config user.name & please set dead value or install git && error: git config user.email & please set dead value or install git & please set dead value or install git
- * @LastEditTime: 2026-01-14 15:26:38
- * @FilePath: /cjmLearn/CSS/flex布局.md
- * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
--->
-
 # flex
+
+## flex-direction（主轴方向）
+
+| 值             | 说明                       |
+| -------------- | -------------------------- |
+| row            | 水平，主轴从左到右（默认） |
+| row-reverse    | 水平，主轴从右到左         |
+| column         | 垂直，主轴从上到下         |
+| column-reverse | 垂直，主轴从下到上         |
+
+## flex-wrap（换行）
+
+| 值           | 说明                     |
+| ------------ | ------------------------ |
+| nowrap       | 不换行（默认）           |
+| wrap         | 换行，主轴空间不足时换行 |
+| wrap-reverse | 换行，但行倒序排列       |
+
+## justify-content
+
+| 值            | 说明                   |
+| ------------- | ---------------------- |
+| flex-start    | 左对齐（默认）         |
+| flex-end      | 右对齐                 |
+| center        | 居中                   |
+| space-between | 两端对齐，间距平均分布 |
+| space-around  | 间距均匀，首尾留半间距 |
+| space-evenly  | 间距均匀，包括首尾     |
+
+## align-items
+
+| 值         | 说明             |
+| ---------- | ---------------- |
+| stretch    | 拉伸填充（默认） |
+| flex-start | 交叉轴起点对齐   |
+| flex-end   | 交叉轴末端对齐   |
+| center     | 居中             |
+| baseline   | 基线对齐         |
+
+## align-content
+
+| 值            | 说明                 |
+| ------------- | -------------------- |
+| stretch       | 拉伸（默认）         |
+| flex-start    | 起点对齐             |
+| flex-end      | 末端对齐             |
+| center        | 居中                 |
+| space-between | 两端对齐，行间距平均 |
+| space-around  | 行间距均匀           |
+
+## flex-grow
+
+| 值  | 说明           |
+| --- | -------------- |
+| 0   | 不放大（默认） |
+| 1   | 放大比例为 1   |
+| 2   | 放大比例为 2   |
+| ... | 以此类推       |
+
+# 子元素属性
+
+## order
+
+| 值  | 说明             |
+| --- | ---------------- |
+| 0   | 顺序为 0（默认） |
+| 1   | 顺序为 1         |
+| 2   | 顺序为 2         |
+| ... | 以此类推         |
+
+## align-self（单个项目交叉轴对齐），可覆盖父容器 align-items
+
+| 值         | 说明                             |
+| ---------- | -------------------------------- |
+| auto       | 继承父元素的 align-items（默认） |
+| stretch    | 拉伸填充                         |
+| flex-start | 交叉轴起点对齐                   |
+| flex-end   | 交叉轴末端对齐                   |
+
+## flex-shrink
+
+| 值  | 说明           |
+| --- | -------------- |
+| 0   | 不缩小（默认） |
+| 1   | 缩小比例为 1   |
+| 2   | 缩小比例为 2   |
+| ... | 以此类推       |
+
+## flex-basis
+
+| 值    | 说明               |
+| ----- | ------------------ |
+| auto  | 自动（默认）       |
+| 100px | 固定宽度为 100px   |
+| 20%   | 宽度为父元素的 20% |
+| ...   | 以此类推           |
+
+## flex
+
+| 值                               | 说明                                         |
+| -------------------------------- | -------------------------------------------- |
+| flex-grow flex-shrink flex-basis | 简写形式                                     |
+| 0 1 auto                         | 不放大，不缩小，自动宽度                     |
+| 1 0 100px                        | 放大比例为 1，缩小比例为 0，固定宽度为 100px |
+
+# flex 1
+
+.item {
+flex-grow: 1;
+flex-shrink: 1;
+flex-basis: 0%;
+}
+平分剩余空间，按比例缩小放大
