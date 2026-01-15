@@ -31,6 +31,14 @@ effect list 是一条**链表**（通过 nextEffect 指针串起来），用于�
 - commit 阶段的执行顺序
   在 commit 阶段，副作用的执行遵循 effectList 的顺序：DOM 插入 / 更新 / 删除（mutation 阶段）也是先子后父。Layout Effect 和 Passive Effect 的触发，也沿用这个顺序。
 
+### 为什么 commit 阶段是先子后父？
+
+- 子树先稳定，再处理父节点
+- 因为 commit 阶段要操作真实 DOM，而 DOM 是一棵自底向上的树结构，必须保证子节点已经稳定，父节点才能安全执行副作用。
+- React 的 effectList 是按 DFS 后序遍历顺序收集的，本质就是：先子节点，后父节点。
+
+## 例子
+
 举个例子：
 
 ```jsx
