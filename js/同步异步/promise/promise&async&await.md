@@ -138,3 +138,5 @@ async 和 await 是 promise 的语法糖，它们可以让我们以同步的方�
 
 - async 一定会返回一个 promise
 - await 只能在 async 函数中使用，它会暂停 async 函数的执行，直到 promise 解决或拒绝。然后返回 promise 的结果。
+- async 的异常处理： 使用 try...catch 块来捕获异常。
+  - 虽然 try...catch 只能捕获同步代码中的异常，但是 async await
