@@ -1,15 +1,9 @@
-<!--
- * @Author: error: error: git config user.name & please set dead value or install git && error: git config user.email & please set dead value or install git & please set dead value or install git
- * @Date: 2025-11-25 18:04:31
- * @LastEditors: error: error: git config user.name & please set dead value or install git && error: git config user.email & please set dead value or install git & please set dead value or install git
- * @LastEditTime: 2025-12-30 16:44:48
- * @FilePath: /cjmLearn/react/渲染/重新渲染&批处理&state.md
- * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
--->
-
 # 什么时候组件会重新渲染？
 
 ## 1.组件的 props 发生变化
+
+- props是浅引用，如果是基础数据类型，那么值发生变化就会变化
+- props是引用类型，那么引用地址发生变化就会变化
 
 ## 2.组件的 state 发生变化
 
@@ -100,7 +94,6 @@ function ImmediateUpdate() {
 # state
 
 - 📷 **快照**
-
   - **在 React 的一次渲染过程中（也就是一次函数组件的执行），state 的值是固定的快照（snapshot）。**
 
 这意味着，在这次渲染函数开始到结束的整个过程中，state 不会因为 setState 调用而立即更新
