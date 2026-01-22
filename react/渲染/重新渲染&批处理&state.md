@@ -93,6 +93,11 @@ function ImmediateUpdate() {
 
 # state
 
+## state 是“组件自己的、会变化的数据”，它一变，组件就会重新渲染。
+
+**UI = f(state)**
+
+- state 变 → UI 自动变不用你手动操作 DOM
 - 📷 **快照**
   - **在 React 的一次渲染过程中（也就是一次函数组件的执行），state 的值是固定的快照（snapshot）。**
 
