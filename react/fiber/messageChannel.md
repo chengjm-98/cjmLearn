@@ -11,6 +11,15 @@
 
 ### messageChannel 的具体使用情况
 
+```jsx
+const channel = new MessageChannel(); //channel.port1. channel.port2
+port.postMessage({ type: "UPDATE", payload: 123 });
+port.onmessage = (event) => {
+  console.log(event.data);
+};
+port.close();
+```
+
 ### react 中的 messageChannel
 
 其实就是把 requestIdCallBack 的内容用 messageChannel 实现了。

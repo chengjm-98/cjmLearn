@@ -128,6 +128,7 @@ export default function FileDownloader() {
         const cached = await getChunk(chunk.index);
         let data;
         if (cached) {
+          //有缓存直接取缓存
           data = cached;
         } else {
           try {
@@ -187,13 +188,15 @@ export default function FileDownloader() {
       chunks,
       abortControllerRef.current.signal,
       (index, data) => {
+        //这是一个回调函数，它在每个分片完成下载后被调用。
+        // 它接受两个参数：index，表示分片的索引，data表示分片的二进制数据。
         // 保存到最终 buffers（顺序可能乱，可在最后排序）
         buffers[index] = data;
 
         // 生成可渲染 Blob URL
         const blobUrl = URL.createObjectURL(new Blob([data]));
         setChunksUrls((prev) => [...prev, { index, url: blobUrl }]);
-      }
+      },
     );
 
     if (abortControllerRef.current.signal.aborted) return;
