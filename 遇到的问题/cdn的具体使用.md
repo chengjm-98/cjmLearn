@@ -23,7 +23,7 @@ CDN 节点缓存命中？ → 是 → 直接返回浏览器
 
 # 具体使用
 
-- 前端设置baseurl，在vite或者webpack
+- 前端设置baseurl，在vite或者webpack，可以根据环境配置不同的baseurl，一般生产环境走cdn，开发环境走本地
 
   ```jsx
   ---vite----
@@ -31,8 +31,11 @@ CDN 节点缓存命中？ → 是 → 直接返回浏览器
   base: 'https://cdn.example.com/',
    }
   ----webpack----
+  
   output: {
-  publicPath: 'https://cdn.example.com/'
+  publicPath: isProd
+      ? 'https://cdn.example.com/assets/'  // 生产环境走 CDN
+      : '/',
   }
   ```
 

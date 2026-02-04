@@ -1,3 +1,11 @@
+<!--
+ * @Author: error: error: git config user.name & please set dead value or install git && error: git config user.email & please set dead value or install git & please set dead value or install git
+ * @Date: 2026-01-14 15:42:40
+ * @LastEditors: error: error: git config user.name & please set dead value or install git && error: git config user.email & please set dead value or install git & please set dead value or install git
+ * @LastEditTime: 2026-02-04 14:45:21
+ * @FilePath: /cjmLearn/遇到的问题/无感刷新toke.md
+ * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+-->
 # 什么是无感刷新 token
 
 当短期 Token（access token）过期时，系统自动用长期 Token（refresh token）换一个新的短期 Token。  
@@ -19,7 +27,7 @@
 ```jsx
 用户登录
    ↓
-返回 AccessToken + RefreshToken
+返回 AccessToken（短） + RefreshToken（长）
    ↓
 前端请求接口 → 带 AccessToken
    ↓
