@@ -172,3 +172,13 @@ cacheGroups 决定是否抽 chunk：
           enforce: true, // 强制拆包
         },
   ```
+# 分包情况
+- commons.js 是公共业务代码，它包含了 shared 工具。
+- vendor.js 是第三方库，包含了 node_modules 中的依赖。
+- HomePage.chunk.js 是 HomePage 页面的主 chunk，它包含了 Banner、ProductList 和 FlashSale 组件。
+   - 静态的 import 会被合并到主 chunk 中。
+   - 静态的 import 也可以被强制拆包
+- async-chunk.js 是异步加载的 chunk，可能包含了其他页面的组件。
+- runtime.js 是 Webpack 的运行时代码，用于管理模块加载和热更新。
+   - webpack 应用的启动器 + chunk 调度中心
+   - 拼装说明书
